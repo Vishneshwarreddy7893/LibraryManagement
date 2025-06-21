@@ -253,16 +253,12 @@ mongoose.connect(process.env.MONGO_URI)
 const path = require('path');
 
 // Serve static files from React build in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../../project/dist')));
-  
-  // Handle React routing - send all non-API requests to React app
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(__dirname, '../../../project/dist/index.html'));
-    }
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
-// Export app for Vercel
+// Export app for Vercel (Add this at the very end)
 module.exports = app;
