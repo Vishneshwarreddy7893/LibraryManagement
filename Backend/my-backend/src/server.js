@@ -247,3 +247,22 @@ mongoose.connect(process.env.MONGO_URI)
     });
   })
   .catch(err => console.error('MongoDB connection error:', err));
+
+
+  // Add this at the end of your server.js file
+const path = require('path');
+
+// Serve static files from React build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../../project/dist')));
+  
+  // Handle React routing - send all non-API requests to React app
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(__dirname, '../../../project/dist/index.html'));
+    }
+  });
+}
+
+// Export app for Vercel
+module.exports = app;
