@@ -22,10 +22,5 @@
       "src": "/(.*)",
       "dest": "project/$1"
     }
-  ],
-  "functions": {
-    "Backend/my-backend/src/server.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
